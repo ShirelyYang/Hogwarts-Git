@@ -1,6 +1,9 @@
+import os
 import shelve
+import time
 
 from selenium import webdriver
+from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.common.by import By
 from time import sleep
 
@@ -19,7 +22,8 @@ class TestEnteriseWechat:
 
     def test_import_contact(self):
         # 从shelve   小型数据库中  读取数据
-        db = shelve.open("mydb/logincookies")
+        db = shelve.open("../test_project/cookie_db/weixin_cookie")
+        # db = shelve.open("../test_project/cookie_db/weixin_cookie")
         cookies = db["cookie"]
         db.close()
         # 获取登录前网址
@@ -41,3 +45,21 @@ class TestEnteriseWechat:
         assert self.driver.find_element(By.ID, "upload_file_name").text == "test.xlsx"
         # 强制等待3秒，加强效果
         sleep(3)
+
+    def test_cookie(self):
+        self.driver.get("https://work.weixin.qq.com/wework_admin/frame#index")
+        sleep(10)
+        cookies = self.driver.get_cookies()
+        # print(cookies)
+        # cookies = [
+        #     {'domain': '.work.weixin.qq.com', 'httpOnly': True, 'name': 'wwrtx.refid', 'path': '/', 'secure': False,
+        #      'value': '17162754233138488'}, {'domain': 'work.weixin.qq.com', 'expiry': 1599334674, 'httpOnly': True,
+        #                                      'name': 'ww_rtkey', 'path': '/', 'secure': False, 'value': '287vv9r'}, {
+        #         'domain': '.work.weixin.qq.com', 'httpOnly': True, 'name': 'wwrtx.ref', 'path': '/', 'secure': False,
+        #         'value': 'direct'}, {'domain': '.work.weixin.qq.com', 'expiry': 1630839138, 'httpOnly': False,
+        #                              'name': 'wwrtx.c_gdpr', 'path': '/', 'secure': False, 'value': '0'}, {
+        #         'domain': '.work.weixin.qq.com', 'expiry': 1601895139, 'httpOnly': False, 'name': 'wwrtx.i18n_lan',
+        #         'path': '/', 'secure': False, 'value': 'zh-cn'}]
+        db = shelve.open("../test_project/cookie_db/weixin_cookie")
+        db['cookie'] = cookies
+        db.close()
