@@ -8,3 +8,4 @@ class TestRegister:
     def test_register(self):
         # assert self.main.goto_register().register() == None
         assert self.main.goto_login().register().register() == None
+

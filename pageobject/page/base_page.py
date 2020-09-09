@@ -18,3 +18,4 @@ class BasePage:
 
     def find(self, by, locator):
         return self._driver.find_element(by, locator)
+

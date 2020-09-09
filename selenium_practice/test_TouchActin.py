@@ -2,6 +2,8 @@ import pytest
 from selenium.webdriver import TouchActions
 from selenium import webdriver
 
+from base import Base
+
 
 class TestTouchAction(Base):
     def setup(self):

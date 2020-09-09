@@ -1,13 +1,15 @@
+import shelve
 from time import sleep
+from selenium import webdriver
 
-from base import Base
 
-
-class TestGetCookie(Base):
+class TestGetCookie:
     def test_get_cookie(self):
+        self.driver = webdriver.Chrome()
         self.driver.get("https://service.kangxin.com/platform/home?path=%2Fhome")
         sleep(30)
         cookies = self.driver.get_cookies()
-        print(cookies)
-
+        db = shelve.open("mydb/KXCN_Normal_cookies")
+        db['cookie'] = cookies
+        db.close()
 
