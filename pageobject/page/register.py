@@ -1,3 +1,5 @@
+from time import sleep
+
 from selenium.webdriver.common.by import By
 
 from base_page import BasePage
@@ -7,6 +9,7 @@ class Register(BasePage):
     def register(self):
         self.find(By.ID, "corp_name").send_keys("Test")
         self.find(By.ID, "corp_industry").click()
+        sleep(3)
         self.find(By.XPATH, '//div[@data-name="IT服务"]').click()
         self.find(By.XPATH, '//div[@data-name="互联网和相关服务"]').click()
         self.find(By.ID, "corp_scale_btn").click()
