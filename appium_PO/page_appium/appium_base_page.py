@@ -14,7 +14,7 @@ class AppiumBasePage:
 
     def find(self, by, locator=None):
         try:
-            element =  self._driver.find_element(*by) if isinstance(by, tuple) else self._driver.find_element(by, locator)
+            element = self._driver.find_elements(*by) if isinstance(by, tuple) else self._driver.find_element(by, locator)
             self._error_cont = 0
             return element
         except Exception as e:
@@ -58,3 +58,5 @@ class AppiumBasePage:
                         for param in self._params:
                             content = content.replace("{%s}" % param, self._params[param])
                         self.send(content, step["by"], step["locator"])
+                    else:
+                        pass
