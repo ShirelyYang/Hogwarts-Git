@@ -5,7 +5,7 @@ from appium.webdriver.webdriver import WebDriver
 
 class AppiumBasePage:
     _black_list = [(MobileBy.ID, "image_cancel")]
-    _error_cont = 0
+    _error_count = 0
     _error_max = 10
     _params = {}
     # 指定传入的driver类型是 WebDriver，好处就是下一步操作可以调用WebDriver的方法
@@ -15,11 +15,11 @@ class AppiumBasePage:
     def find(self, by, locator=None):
         try:
             element = self._driver.find_elements(*by) if isinstance(by, tuple) else self._driver.find_element(by, locator)
-            self._error_cont = 0
+            self._error_count = 0
             return element
         except Exception as e:
-            self._error_cont += 1
-            if self._error_cont >= self._error_max:
+            self._error_count += 1
+            if self._error_count >= self._error_max:
                 raise e
             for black in self._black_list:
                 elements = self._driver.find_elements(*black)
@@ -31,10 +31,10 @@ class AppiumBasePage:
     def send(self, value, by, locator=None):
         try:
             self.find(by, locator).send_keys(value)
-            self._error_cont = 0
+            self._error_count = 0
         except Exception as e:
-            self._error_cont += 1
-            if self._error_cont >= self._error_max:
+            self._error_count += 1
+            if self._error_count >= self._error_max:
                 raise e
             for black in self._black_list:
                 elements = self._driver.find_elements(*black)
