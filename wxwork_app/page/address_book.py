@@ -1,3 +1,5 @@
+import pytest
+import yaml
 from appium.webdriver.common.touch_action import TouchAction
 from time import sleep
 from page.basepage import BasePage
@@ -21,13 +23,14 @@ class AddressBook(BasePage):
                 action.press(x=x1, y=y1).wait(200).move_to(x=x1, y=y2).release().perform()
                 i += 1
 
-    def add(self):
+    # @pytest.mark.parametrize("name, gender, phonenum", get_contact())
+    def add(self, name, gender, phonenum):
         self.scroll(by="xpath", locator='//*[@text="添加成员"]')
         self.find(by="xpath", locator='//*[@text="手动输入添加"]').click()
-        self.find(by="xpath", locator='//*[@resource-id="com.tencent.wework:id/em7"]//*[@resource-id="com.tencent.wework:id/b4t"]').send_keys("亚历山大")
+        self.find(by="xpath", locator='//*[@resource-id="com.tencent.wework:id/em7"]//*[@resource-id="com.tencent.wework:id/b4t"]').send_keys(name)
         self.find(by="xpath", locator='//*[@resource-id="com.tencent.wework:id/d5l"]//*[@resource-id="com.tencent.wework:id/b5v"]').click()
-        self.find(by="xpath", locator='//*[@text="女"]').click()
-        self.find(by="xpath", locator='//*[@text="手机号"]').send_keys("13888888888")
+        self.find(by="xpath", locator=f'//*[@text="{gender}"]').click()
+        self.find(by="xpath", locator='//*[@text="手机号"]').send_keys(phonenum)
         self.find(by="id", locator="i6k").click()
         sleep(3)
         self.find(by="id", locator="i63").click()
@@ -36,8 +39,7 @@ class AddressBook(BasePage):
         toast_text = self.find(by="xpath", locator='//*[@class="android.widget.Toast"]').text
         return toast_text
 
-    def delete(self):
-        name = "亚历山大"
+    def delete(self, name):
         self.find(by="xpath", locator=f'//*[@text="{name}"]').click()
         self.find(by="id", locator="i6d").click()
         self.find(by="id", locator="b_x").click()
