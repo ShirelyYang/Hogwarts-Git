@@ -1,3 +1,4 @@
+import yaml
 from appium import webdriver
 
 from pageobject.base_page import BasePage
@@ -17,6 +18,7 @@ class App(BasePage):
             caps["appActivity"] = self._activity
             caps["autoGrantPermissions"] = True
             caps["noReset"] = True
+            caps['udid'] = yaml.safe_load(open("../datas/configuration.yaml"))["caps"]['udid']
             self._driver = webdriver.Remote('http://localhost:4723/wd/hub', caps)
         else:
             self._driver.start_activity(self._package, self._activity)
