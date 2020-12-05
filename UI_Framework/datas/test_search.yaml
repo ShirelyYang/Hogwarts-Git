@@ -1,0 +1,12 @@
+params:
+  # 列表
+  - keyword: alibaba
+  - keyword: baidu
+  - keyword: jd
+
+# 词典
+#keyword：
+#  - alibaba
+#  - baidu
+#  - jd
+
